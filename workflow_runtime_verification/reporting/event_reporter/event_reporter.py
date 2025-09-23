@@ -20,7 +20,6 @@ class EventReporter:
     def __init__(self, stream_or_file_object):
         self._output = stream_or_file_object
 
-    # initialize: to file, to std out?
     def report_task_started(self, task_name, time):
         serialized_event = TaskStartedEvent(task_name, time).serialized()
         self._write_to_output(serialized_event)
