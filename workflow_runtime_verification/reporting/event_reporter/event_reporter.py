@@ -1,6 +1,3 @@
-import os
-import sys
-
 from workflow_runtime_verification.reporting.event.checkpoint_reached_event import (
     CheckpointReachedEvent,
 )
