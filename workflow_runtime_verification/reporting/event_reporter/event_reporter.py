@@ -1,3 +1,4 @@
+import os
 import sys
 
 from workflow_runtime_verification.reporting.event.checkpoint_reached_event import (
@@ -19,43 +20,49 @@ from workflow_runtime_verification.reporting.event.variable_value_assigned_event
 
 
 class EventReporter:
-    def __init__(self):
-        self._output = sys.stdout
+    def __init__(self, stream_or_file_object):
+        self._output = stream_or_file_object
 
     # initialize: to file, to std out?
     def report_task_started(self, task_name, time):
         serialized_event = TaskStartedEvent(task_name, time).serialized()
-        self._write(serialized_event)
+        self._write_to_output(serialized_event)
         return serialized_event
 
     def report_task_finished(self, task_name, time):
         serialized_event = TaskFinishedEvent(task_name, time).serialized()
-        self._write(serialized_event)
+        self._write_to_output(serialized_event)
         return serialized_event
 
     def report_declared_variable(self, variable_name, variable_type, time):
         serialized_event = DeclareVariableEvent(
             variable_name, variable_type, time
         ).serialized()
-        self._write(serialized_event)
+        self._write_to_output(serialized_event)
         return serialized_event
 
     def report_checkpoint_reached(self, checkpoint_name, time):
         serialized_event = CheckpointReachedEvent(checkpoint_name, time).serialized()
-        self._write(serialized_event)
+        self._write_to_output(serialized_event)
         return serialized_event
 
     def report_variable_value_assigned(self, variable_name, variable_value, time):
         serialized_event = VariableValueAssignedEvent(
             variable_name, variable_value, time
         ).serialized()
-        self._write(serialized_event)
+        self._write_to_output(serialized_event)
         return serialized_event
 
     def report_component_event(self, component_name, data, time):
         serialized_event = ComponentEvent(component_name, data, time).serialized()
-        self._write(serialized_event)
+        self._write_to_output(serialized_event)
+        self._write_to_output("\n")
         return serialized_event
 
-    def _write(self, serialized_event):
+    def _write_to_output(self, serialized_event):
         self._output.write(serialized_event)
+
+
+class NullFileObject:
+    def write(self, _text):
+        pass

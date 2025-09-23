@@ -1,3 +1,5 @@
 *.DS_Store
 *__pycache__*
 *.idea/*
+test_report_output_file.txt
+unsatisfied_property*
