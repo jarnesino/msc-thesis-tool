@@ -44,7 +44,9 @@ class EventDecoder:
             case "declare_variable":
                 return DeclareVariableEvent.decode_with(EventDecoder, encoded_event)
             case "variable_value_assigned":
-                return VariableValueAssignedEvent.decode_with(EventDecoder, encoded_event)
+                return VariableValueAssignedEvent.decode_with(
+                    EventDecoder, encoded_event
+                )
             case _:
                 raise InvalidEventError(encoded_event)
 

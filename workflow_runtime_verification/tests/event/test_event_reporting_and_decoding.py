@@ -14,7 +14,7 @@ from workflow_runtime_verification.reporting.event_decoder import EventDecoder
 from workflow_runtime_verification.tests.test import Test
 
 
-class EventDecoderTest(Test):
+class EventReportingAndDecodingTest(Test):
     def set_up(self):
         super().set_up()
         self._event_decoder = EventDecoder()
