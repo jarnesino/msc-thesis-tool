@@ -3,3 +3,4 @@
 *.idea/*
 test_report_output_file.txt
 unsatisfied_property*
+*__MACOSX/*

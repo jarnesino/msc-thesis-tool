@@ -24,6 +24,8 @@ class Verification:
             specification_directory
         )
 
+        # self._delete_unpacked_specification_files()
+
         return cls(workflow_specification, components_specification)
 
     def __init__(self, workflow_specification, components_specification):
