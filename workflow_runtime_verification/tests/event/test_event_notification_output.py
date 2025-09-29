@@ -28,7 +28,7 @@ class EventNotificationOutputTest(Test):
             )
 
             line_read_from_standard_output = self._read_last_line_from_file(report_file)
-            self.assertEqual(serialized_event, line_read_from_standard_output)
+            self.assertEqual(serialized_event + "\n", line_read_from_standard_output)
             self._restore_standard_output()
 
         os.remove(report_file_name)

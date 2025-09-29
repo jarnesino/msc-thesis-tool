@@ -102,10 +102,7 @@ class WorkflowSpecification:
         cls, encoded_specification, specification_file_directory
     ):
         nodes_as_text = encoded_specification[2:]
-        nodes_as_text = [
-            encoded_task_specification.split(",")
-            for encoded_task_specification in nodes_as_text
-        ]
+        nodes_as_text = [encoded_node.split(",") for encoded_node in nodes_as_text]
 
         return [
             cls._decode_node(encoded_node, specification_file_directory)
