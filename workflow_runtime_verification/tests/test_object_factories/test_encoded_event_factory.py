@@ -3,7 +3,6 @@ from workflow_runtime_verification.reporting.event.checkpoint_reached_event impo
 )
 from workflow_runtime_verification.reporting.event_reporter.event_reporter import (
     EventReporter,
-    NullFileObject,
 )
 from workflow_runtime_verification.tests.test_object_factories.test_name_and_value_factory import (
     TestNameAndValueFactory,
@@ -15,7 +14,7 @@ class TestEncodedEventFactory(TestNameAndValueFactory):
         return 0
 
     def event_reporter(self):
-        return self.event_reporter_with_output(NullFileObject())
+        return EventReporter.new_with_no_output()
 
     def event_reporter_with_output(self, report_output):
         return EventReporter(report_output)

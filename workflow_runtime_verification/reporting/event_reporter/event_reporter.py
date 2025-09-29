@@ -17,6 +17,10 @@ from workflow_runtime_verification.reporting.event.variable_value_assigned_event
 
 
 class EventReporter:
+    @classmethod
+    def new_with_no_output(cls):
+        return cls(NullFileObject())
+
     def __init__(self, stream_or_file_object):
         self._output = stream_or_file_object
 
@@ -52,11 +56,11 @@ class EventReporter:
     def report_component_event(self, component_name, data, time):
         serialized_event = ComponentEvent(component_name, data, time).serialized()
         self._write_to_output(serialized_event)
-        self._write_to_output("\n")
         return serialized_event
 
     def _write_to_output(self, serialized_event):
         self._output.write(serialized_event)
+        self._output.write("\n")
 
 
 class NullFileObject:
