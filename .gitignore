@@ -5,3 +5,4 @@ test_report_output_file.txt
 *__MACOSX/*
 unsatisfied_property*
 *.smt2
+*ignore-in-git*
