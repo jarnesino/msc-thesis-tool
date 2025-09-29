@@ -72,10 +72,10 @@ def log_common_branch():
 
 def log_test_run_branch():
     event_reporter.report_variable_value_assigned(
-        "results", "results OK", clock.current()
+        "results", "\"resultsOK\"", clock.current()
     )
     event_reporter.report_variable_value_assigned(
-        "signatures", "supervisor1,supervisor2", clock.current()
+        "signatures", "\"supervisor1supervisor2\"", clock.current()
     )
     event_reporter.report_task_started("stop_coolant_pump", clock.current())
     event_reporter.report_variable_value_assigned("stage", "1", clock.current())
