@@ -24,7 +24,7 @@ class Verification:
             specification_directory
         )
 
-        # self._delete_unpacked_specification_files()
+        cls._delete_unpacked_specification_files(specification_directory)
 
         return cls(workflow_specification, components_specification)
 
@@ -122,6 +122,10 @@ class Verification:
 
         shutil.unpack_archive(file_path, specification_directory)
         return specification_directory
+
+    @classmethod
+    def _delete_unpacked_specification_files(cls, specification_directory):
+        shutil.rmtree(specification_directory)
 
     @classmethod
     def _read_workflow_specification_from(cls, specification_directory):
