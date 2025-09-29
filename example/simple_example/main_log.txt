@@ -1,0 +1,10 @@
+1,workflow_event,declare_variable,fail_safe_lock,bool
+2,workflow_event,variable_value_assigned,fail_safe_lock,False
+3,workflow_event,declare_variable,stage,int
+4,workflow_event,variable_value_assigned,stage,1
+5,workflow_event,task_started,initiate_pressure_measurements
+6,workflow_event,checkpoint_reached,control_failsafe
+7,workflow_event,declare_variable,pressure,int
+8,workflow_event,variable_value_assigned,pressure,156
+9,component_event,display,display_write,156
+10,workflow_event,task_finished,initiate_pressure_measurements
