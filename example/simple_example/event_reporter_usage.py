@@ -25,20 +25,20 @@ report_file_name = "main_log.txt"
 
 
 def log_common_branch_declarations():
-    event_reporter.report_declared_variable("fail_safe_lock", "bool", clock.current())
+    event_reporter.report_declared_variable("fail_safe_lock", "int", clock.current())
     event_reporter.report_declared_variable("stage", "int", clock.current())
     event_reporter.report_declared_variable("pressure", "int", clock.current())
     event_reporter.report_declared_variable("temperature", "int", clock.current())
 
 
 def log_test_run_branch_declarations():
-    event_reporter.report_declared_variable("results", "string", clock.current())
-    event_reporter.report_declared_variable("signatures", "string", clock.current())
+    event_reporter.report_declared_variable("results", "char*", clock.current())
+    event_reporter.report_declared_variable("signatures", "char*", clock.current())
 
 
 def log_common_branch():
     event_reporter.report_variable_value_assigned(
-        "fail_safe_lock", "False", clock.current()
+        "fail_safe_lock", "0", clock.current()
     )
 
     event_reporter.report_variable_value_assigned("stage", "1", clock.current())
