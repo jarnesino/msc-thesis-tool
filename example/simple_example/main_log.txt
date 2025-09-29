@@ -8,3 +8,15 @@
 8,workflow_event,variable_value_assigned,pressure,156
 9,component_event,display,display_write,156
 10,workflow_event,task_finished,initiate_pressure_measurements
+11,workflow_event,task_started,start_coolant_pump
+12,workflow_event,variable_value_assigned,stage,2
+13,workflow_event,task_finished,start_coolant_pump
+14,workflow_event,task_started,initiate_temperature_measurements
+15,workflow_event,checkpoint_reached,control_failsafe
+16,workflow_event,declare_variable,temperature,int
+17,workflow_event,variable_value_assigned,temperature,617
+18,component_event,display,display_write,156
+19,workflow_event,task_finished,initiate_temperature_measurements
+20,workflow_event,task_started,stop_coolant_pump
+21,workflow_event,variable_value_assigned,stage,1
+22,workflow_event,task_finished,stop_coolant_pump
