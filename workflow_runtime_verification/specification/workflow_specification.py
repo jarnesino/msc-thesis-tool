@@ -93,7 +93,7 @@ class WorkflowSpecification:
     def _ordered_nodes_from_file(
         cls, encoded_specification, specification_file_directory
     ):
-        nodes_as_text = encoded_specification[2:]
+        nodes_as_text = encoded_specification[1:]
         nodes_as_text = [encoded_node.split(",") for encoded_node in nodes_as_text]
 
         return [
