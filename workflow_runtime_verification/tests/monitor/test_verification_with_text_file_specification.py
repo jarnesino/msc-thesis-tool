@@ -33,7 +33,7 @@ class VerificationWithTextFileSpecificationTest(Test):
         monitor = self.objects.monitor_with_no_components_for(
             self._workflow_specification_from_file_with_unsatisfied_precondition()
         )
-        event_report = self.events_declaring_the_variables() + [
+        event_report = self._events_declaring_the_variables() + [
             self.objects.task_started_encoded_event(self.objects.task_name())
         ]
 
@@ -43,7 +43,7 @@ class VerificationWithTextFileSpecificationTest(Test):
         monitor = self.objects.monitor_with_no_components_for(
             self._workflow_specification_from_file_with_unsatisfied_postcondition()
         )
-        event_report = self.events_declaring_the_variables() + [
+        event_report = self._events_declaring_the_variables() + [
             self.objects.task_started_encoded_event(self.objects.task_name()),
             self.objects.task_finished_encoded_event(self.objects.task_name()),
         ]
@@ -57,7 +57,7 @@ class VerificationWithTextFileSpecificationTest(Test):
             self._workflow_specification_with_global_checkpoint_from_file(),
             self.objects.empty_component_dictionary(),
         )
-        event_report = self.events_declaring_the_variables() + [
+        event_report = self._events_declaring_the_variables() + [
             self.objects.variable_value_assigned_encoded_event(
                 self.objects.variable_name(),
                 self.objects.variable_value(),
@@ -84,7 +84,7 @@ class VerificationWithTextFileSpecificationTest(Test):
             self._workflow_specification_with_local_checkpoints_from_file(),
             self.objects.empty_component_dictionary(),
         )
-        event_report = self.events_declaring_the_variables() + [
+        event_report = self._events_declaring_the_variables() + [
             self.objects.task_started_encoded_event(self.objects.task_name()),
             self.objects.variable_value_assigned_encoded_event(
                 self.objects.variable_name(),
@@ -103,6 +103,11 @@ class VerificationWithTextFileSpecificationTest(Test):
         is_report_valid = monitor.run(event_report)
 
         self.assertTrue(is_report_valid)
+
+    def test_verifies_a_valid_report_with_repetition_for_a_workflow_with_many_starting_nodes(
+        self,
+    ):
+        self.fail("Implement this test")
 
     def _workflow_specification_from_file_with_cycle_inside_a_choice(self):
         workflow_specification_file_path = self._resource_path_for(
@@ -134,7 +139,7 @@ class VerificationWithTextFileSpecificationTest(Test):
         )
         return WorkflowSpecification.new_from_file(workflow_specification_file_path)
 
-    def events_declaring_the_variables(self):
+    def _events_declaring_the_variables(self):
         return [
             self.objects.declared_variable_encoded_event(
                 self.objects.variable_name(),

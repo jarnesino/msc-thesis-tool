@@ -39,7 +39,6 @@ class WorkflowSpecification:
             ordered_nodes,
             dependencies,
             start_node_index=start_node_index,
-            end_node_index=(len(ordered_nodes) - 1),
         )
 
     def __init__(
@@ -47,12 +46,9 @@ class WorkflowSpecification:
         ordered_elements,
         dependencies,
         start_node_index=None,
-        end_node_index=None,
     ):
         super().__init__()
-        self._build_workflow_graph(
-            ordered_elements, dependencies, start_node_index, end_node_index
-        )
+        self._build_workflow_graph(ordered_elements, dependencies, start_node_index)
 
     def task_exists(self, task_name):
         return any(task.is_named(task_name) for task in self._task_specifications())
@@ -259,9 +255,7 @@ class WorkflowSpecification:
         nodes = self._graph.vs[self._workflow_node_attribute_name()]
         return [node for node in nodes if isinstance(node, Checkpoint)]
 
-    def _build_workflow_graph(
-        self, ordered_elements, dependencies, start_node_index, end_node_index
-    ):
+    def _build_workflow_graph(self, ordered_elements, dependencies, start_node_index):
         amount_of_elements = len(ordered_elements)
         list_of_edges = list(dependencies)
 
@@ -272,9 +266,9 @@ class WorkflowSpecification:
             directed=True,
         )
 
-        self._wrap_graph_in_cycle(start_node_index, end_node_index)
+        self._wrap_graph_in_cycle(start_node_index)
 
-    def _wrap_graph_in_cycle(self, start_node_index, end_node_index):
+    def _wrap_graph_in_cycle(self, start_node_index):
         if start_node_index is None:
             graph_start_node = [
                 node for node in self._graph.vs if node.indegree() == 0
@@ -282,14 +276,10 @@ class WorkflowSpecification:
         else:
             graph_start_node = self._graph.vs[start_node_index]
 
-        if end_node_index is None:
-            graph_end_node = [node for node in self._graph.vs if node.outdegree() == 0][
-                0
-            ]
-        else:
-            graph_end_node = self._graph.vs[end_node_index]
+        graph_end_nodes = [node for node in self._graph.vs if node.outdegree() == 0]
 
-        self._graph.add_edge(graph_end_node, graph_start_node)
+        for graph_end_node in graph_end_nodes:
+            self._graph.add_edge(graph_end_node, graph_start_node)
         self._starting_element = graph_start_node[self._workflow_node_attribute_name()]
 
     def _immediately_preceding_elements_for_graph_node(self, current_graph_node):
