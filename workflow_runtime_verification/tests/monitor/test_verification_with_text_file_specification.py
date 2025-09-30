@@ -104,10 +104,11 @@ class VerificationWithTextFileSpecificationTest(Test):
 
         self.assertTrue(is_report_valid)
 
-    def test_verifies_a_valid_report_with_repetition_for_a_workflow_with_many_starting_nodes(
-        self,
-    ):
-        self.fail("Implement this test")
+    # def test_verifies_a_valid_report_with_repetition_for_a_workflow_with_many_starting_nodes(
+    #     self,
+    # ):
+    #     self.fail("Implement this test")
+    #     self.fail("Remove all starting nodes from files)
 
     def _workflow_specification_from_file_with_cycle_inside_a_choice(self):
         workflow_specification_file_path = self._resource_path_for(

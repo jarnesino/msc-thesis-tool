@@ -624,7 +624,27 @@ class VerificationTest(Test):
     def test_verifies_a_valid_report_with_repetition_for_a_workflow_starting_with_a_choice(
         self,
     ):
-        self.fail("Implement this test")
+        monitor = self.objects.monitor_with_no_components_for(
+            self.objects.workflow_specification_starting_with_choice()
+        )
+        event_report = [
+            self.objects.task_started_encoded_event(self.objects.middle_task_1_name()),
+            self.objects.task_finished_encoded_event(self.objects.middle_task_1_name()),
+            self.objects.task_started_encoded_event(self.objects.final_task_name()),
+            self.objects.task_finished_encoded_event(self.objects.final_task_name()),
+            self.objects.task_started_encoded_event(self.objects.middle_task_2_name()),
+            self.objects.task_finished_encoded_event(self.objects.middle_task_2_name()),
+            self.objects.task_started_encoded_event(self.objects.middle_task_3_name()),
+            self.objects.task_finished_encoded_event(self.objects.middle_task_3_name()),
+            self.objects.task_started_encoded_event(self.objects.final_task_name()),
+            self.objects.task_finished_encoded_event(self.objects.final_task_name()),
+            self.objects.task_started_encoded_event(self.objects.middle_task_1_name()),
+            self.objects.task_finished_encoded_event(self.objects.middle_task_1_name()),
+        ]
+
+        is_report_valid = monitor.run(event_report)
+
+        self.assertTrue(is_report_valid)
 
     def test_verifies_a_valid_report_with_repetition_for_a_workflow_ending_in_a_choice(
         self,

@@ -28,8 +28,6 @@ class WorkflowSpecification:
         encoded_specification = specification_file.read().splitlines()
         specification_file_directory = os.path.dirname(specification_file.name)
 
-        start_node_index = cls._start_node_index_from_file(encoded_specification)
-
         ordered_nodes = cls._ordered_nodes_from_file(
             encoded_specification, specification_file_directory
         )
@@ -38,17 +36,15 @@ class WorkflowSpecification:
         return cls(
             ordered_nodes,
             dependencies,
-            start_node_index=start_node_index,
         )
 
     def __init__(
         self,
         ordered_elements,
         dependencies,
-        start_node_index=None,
     ):
         super().__init__()
-        self._build_workflow_graph(ordered_elements, dependencies, start_node_index)
+        self._build_workflow_graph(ordered_elements, dependencies)
 
     def task_exists(self, task_name):
         return any(task.is_named(task_name) for task in self._task_specifications())
@@ -67,7 +63,7 @@ class WorkflowSpecification:
 
     def is_starting_element(self, element_name):
         element = self._element_named(element_name)
-        return element == self._starting_element
+        return element in self._starting_elements
 
     def immediately_preceding_elements_for(self, element_name):
         element = self._element_named(element_name)
@@ -104,10 +100,6 @@ class WorkflowSpecification:
             cls._decode_node(encoded_node, specification_file_directory)
             for encoded_node in nodes_as_text
         ]
-
-    @classmethod
-    def _start_node_index_from_file(cls, encoded_specification):
-        return int(encoded_specification[1])
 
     @classmethod
     def _filenames_from_set(cls, filenames_set):
@@ -255,7 +247,7 @@ class WorkflowSpecification:
         nodes = self._graph.vs[self._workflow_node_attribute_name()]
         return [node for node in nodes if isinstance(node, Checkpoint)]
 
-    def _build_workflow_graph(self, ordered_elements, dependencies, start_node_index):
+    def _build_workflow_graph(self, ordered_elements, dependencies):
         amount_of_elements = len(ordered_elements)
         list_of_edges = list(dependencies)
 
@@ -266,21 +258,20 @@ class WorkflowSpecification:
             directed=True,
         )
 
-        self._wrap_graph_in_cycle(start_node_index)
+        self._wrap_graph_in_cycle()
 
-    def _wrap_graph_in_cycle(self, start_node_index):
-        if start_node_index is None:
-            graph_start_node = [
-                node for node in self._graph.vs if node.indegree() == 0
-            ][0]
-        else:
-            graph_start_node = self._graph.vs[start_node_index]
+    def _wrap_graph_in_cycle(self):
+        graph_start_nodes = [node for node in self._graph.vs if node.indegree() == 0]
 
         graph_end_nodes = [node for node in self._graph.vs if node.outdegree() == 0]
 
-        for graph_end_node in graph_end_nodes:
-            self._graph.add_edge(graph_end_node, graph_start_node)
-        self._starting_element = graph_start_node[self._workflow_node_attribute_name()]
+        for graph_start_node in graph_start_nodes:
+            for graph_end_node in graph_end_nodes:
+                self._graph.add_edge(graph_end_node, graph_start_node)
+        self._starting_elements = [
+            graph_start_node[self._workflow_node_attribute_name()]
+            for graph_start_node in graph_start_nodes
+        ]
 
     def _immediately_preceding_elements_for_graph_node(self, current_graph_node):
         immediate_graph_node_predecessors = current_graph_node.predecessors()
