@@ -4,7 +4,6 @@ import os
 import shutil
 import sys
 import threading
-import unittest
 
 from logging_configuration import LoggingLevel, LoggingDestination
 from workflow_runtime_verification.monitor import Monitor
