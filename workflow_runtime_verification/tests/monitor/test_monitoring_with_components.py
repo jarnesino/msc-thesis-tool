@@ -24,7 +24,7 @@ class MonitoringWithComponentsTest(Test):
         self.assertTrue(is_report_valid)
 
     def _initialize_app_for_visual_components(self):
-        _app = wx.App()
+        self._app = wx.App()
 
     def _component(self):
         return adc()

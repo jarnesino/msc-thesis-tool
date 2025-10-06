@@ -61,6 +61,13 @@ class Verification:
         )
         application_thread.start()
 
+    def run_from_test_for_report(
+        self,
+        event_report_path,
+    ):
+        event_report_file = open(event_report_path, "r")
+        return self._monitor.run(event_report_file)
+
     def stop_component_monitoring(self):
         self._monitor.stop_component_monitoring()
 
