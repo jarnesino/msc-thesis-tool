@@ -6,7 +6,7 @@ from workflow_runtime_verification.specification.workflow_specification import (
 from workflow_runtime_verification.tests.test import Test
 
 
-class VerificationWithTextFileSpecificationTest(Test):
+class MonitoringWithTextFileSpecificationTest(Test):
     def test_verifies_a_valid_report_for_a_workflow_with_a_cycle_and_a_choice(self):
         monitor = self.objects.monitor_with_no_components_for(
             self._workflow_specification_from_file_with_cycle_inside_a_choice()

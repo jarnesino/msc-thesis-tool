@@ -7,9 +7,9 @@ from workflow_runtime_verification.monitor import Monitor
 from workflow_runtime_verification.tests.test import Test
 
 
-class VerificationWithComponentsTest(Test):
+class MonitoringWithComponentsTest(Test):
     def test_verifies_a_valid_report_verifying_component_properties(self):
-        _app = wx.App()
+        self._initialize_app_for_visual_components()
         workflow_specification = self.objects.workflow_specification_with_one_task()
         component_dictionary = {self._component_name(): self._component()}
         monitor = Monitor(workflow_specification, component_dictionary)
@@ -22,6 +22,9 @@ class VerificationWithComponentsTest(Test):
         is_report_valid = monitor.run(event_report)
 
         self.assertTrue(is_report_valid)
+
+    def _initialize_app_for_visual_components(self):
+        _app = wx.App()
 
     def _component(self):
         return adc()

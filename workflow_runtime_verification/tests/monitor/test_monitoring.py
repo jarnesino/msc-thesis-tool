@@ -7,7 +7,7 @@ from workflow_runtime_verification.specification.workflow_node.checkpoint import
 from workflow_runtime_verification.tests.test import Test
 
 
-class VerificationTest(Test):
+class MonitoringTest(Test):
     def test_verifies_a_report_without_task_events_against_any_specification(self):
         monitor = self.objects.monitor_for_workflow_with_one_task()
         is_report_valid = monitor.run(self.objects.report_without_task_events())
