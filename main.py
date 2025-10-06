@@ -107,7 +107,7 @@ class MonitoringPanel(wx.Panel):
         self._update_amount_of_events_to_verify()
 
         self._verification = Verification.new_for_workflow_in_file(specification_path)
-        self._verification.run_for_report(
+        self._verification.run_from_panel_for_report(
             event_report_path,
             self.Parent.logging_destination(),
             self.Parent.logging_verbosity(),

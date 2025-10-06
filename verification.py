@@ -4,6 +4,7 @@ import os
 import shutil
 import sys
 import threading
+import unittest
 
 from logging_configuration import LoggingLevel, LoggingDestination
 from workflow_runtime_verification.monitor import Monitor
@@ -32,9 +33,8 @@ class Verification:
         super().__init__()
 
         self._monitor = Monitor(workflow_specification, components_specification)
-        self._set_up_logging()
 
-    def run_for_report(
+    def run_from_panel_for_report(
         self,
         event_report_path,
         logging_destination,
@@ -43,6 +43,7 @@ class Verification:
         stop_event,
         monitoring_panel,
     ):
+        self._set_up_logging()
         self._configure_logging_destination(logging_destination)
         self._configure_logging_level(logging_level)
 
