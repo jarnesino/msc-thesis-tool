@@ -1,14 +1,14 @@
-from verification import Verification
+from verification import VerificationFromTest
 from workflow_runtime_verification.tests.test import Test
 
 
 class SimpleExampleVerificationTest(Test):
     def test_simple_example_verification_is_successful(self):
-        verification = Verification.new_for_workflow_in_file(
+        verification = VerificationFromTest.new_for_workflow_in_file(
             self._simple_example_specification_file_path()
         )
 
-        is_report_valid = verification.run_from_test_for_report(
+        is_report_valid = verification.run_for_report(
             self._simple_example_report_file_path()
         )
 

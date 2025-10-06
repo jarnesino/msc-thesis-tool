@@ -33,83 +33,6 @@ class Verification:
 
         self._monitor = Monitor(workflow_specification, components_specification)
 
-    def run_from_panel_for_report(
-        self,
-        event_report_path,
-        logging_destination,
-        logging_level,
-        pause_event,
-        stop_event,
-        monitoring_panel,
-    ):
-        self._set_up_logging()
-        self._configure_logging_destination(logging_destination)
-        self._configure_logging_level(logging_level)
-
-        event_report_file = open(event_report_path, "r")
-
-        event_processed_callback = monitoring_panel.update_amount_of_processed_events
-
-        monitor_thread = threading.Thread(
-            target=self._monitor.run,
-            args=[event_report_file, pause_event, stop_event, event_processed_callback],
-        )
-
-        application_thread = threading.Thread(
-            target=monitoring_panel.run_verification, args=[monitor_thread]
-        )
-        application_thread.start()
-
-    def run_from_test_for_report(
-        self,
-        event_report_path,
-    ):
-        event_report_file = open(event_report_path, "r")
-        return self._monitor.run(event_report_file)
-
-    def stop_component_monitoring(self):
-        self._monitor.stop_component_monitoring()
-
-    def _set_up_logging(self):
-        logging.addLevelName(LoggingLevel.PROPERTY_ANALYSIS, "PROPERTY_ANALYSIS")
-        logging.basicConfig(
-            stream=sys.stdout,
-            level=self._default_logging_level(),
-            datefmt=self._date_logging_format(),
-            format=self._logging_format(),
-            encoding="utf-8",
-        )
-
-    def _configure_logging_destination(self, logging_destination):
-        logging.getLogger().handlers.clear()
-
-        formatter = logging.Formatter(
-            self._logging_format(), datefmt=self._date_logging_format()
-        )
-
-        match logging_destination:
-            case LoggingDestination.FILE:
-                handler = logging.FileHandler(
-                    "sandbox/rt-monitor-example-app/log.txt", encoding="utf-8"
-                )
-            case _:
-                handler = logging.StreamHandler(sys.stdout)
-
-        handler.setFormatter(formatter)
-        logging.getLogger().addHandler(handler)
-
-    def _configure_logging_level(self, logging_level):
-        logging.getLogger().setLevel(logging_level)
-
-    def _default_logging_level(self):
-        return LoggingLevel.INFO
-
-    def _date_logging_format(self):
-        return "%d/%m/%Y %H:%M:%S"
-
-    def _logging_format(self):
-        return "%(asctime)s : [%(name)s:%(levelname)s] - %(message)s"
-
     @classmethod
     def _unpack_specification_file(cls, file_path):
         split_file_path = os.path.split(file_path)
@@ -167,3 +90,84 @@ class Verification:
             component_map[device_name] = component_class()
 
         return component_map
+
+
+class VerificationFromPanel(Verification):
+    def run_for_report(
+        self,
+        event_report_path,
+        logging_destination,
+        logging_level,
+        pause_event,
+        stop_event,
+        monitoring_panel,
+    ):
+        self._set_up_logging()
+        self._configure_logging_destination(logging_destination)
+        self._configure_logging_level(logging_level)
+
+        event_report_file = open(event_report_path, "r")
+
+        event_processed_callback = monitoring_panel.update_amount_of_processed_events
+
+        monitor_thread = threading.Thread(
+            target=self._monitor.run,
+            args=[event_report_file, pause_event, stop_event, event_processed_callback],
+        )
+
+        application_thread = threading.Thread(
+            target=monitoring_panel.run_verification, args=[monitor_thread]
+        )
+        application_thread.start()
+
+    def stop_component_monitoring(self):
+        self._monitor.stop_component_monitoring()
+
+    def _set_up_logging(self):
+        logging.addLevelName(LoggingLevel.PROPERTY_ANALYSIS, "PROPERTY_ANALYSIS")
+        logging.basicConfig(
+            stream=sys.stdout,
+            level=self._default_logging_level(),
+            datefmt=self._date_logging_format(),
+            format=self._logging_format(),
+            encoding="utf-8",
+        )
+
+    def _configure_logging_destination(self, logging_destination):
+        logging.getLogger().handlers.clear()
+
+        formatter = logging.Formatter(
+            self._logging_format(), datefmt=self._date_logging_format()
+        )
+
+        match logging_destination:
+            case LoggingDestination.FILE:
+                handler = logging.FileHandler(
+                    "sandbox/rt-monitor-example-app/log.txt", encoding="utf-8"
+                )
+            case _:
+                handler = logging.StreamHandler(sys.stdout)
+
+        handler.setFormatter(formatter)
+        logging.getLogger().addHandler(handler)
+
+    def _configure_logging_level(self, logging_level):
+        logging.getLogger().setLevel(logging_level)
+
+    def _default_logging_level(self):
+        return LoggingLevel.INFO
+
+    def _date_logging_format(self):
+        return "%d/%m/%Y %H:%M:%S"
+
+    def _logging_format(self):
+        return "%(asctime)s : [%(name)s:%(levelname)s] - %(message)s"
+
+
+class VerificationFromTest(Verification):
+    def run_for_report(
+        self,
+        event_report_path,
+    ):
+        event_report_file = open(event_report_path, "r")
+        return self._monitor.run(event_report_file)
