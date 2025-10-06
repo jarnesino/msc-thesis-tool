@@ -1,5 +1,3 @@
-import wx
-
 from verification import Verification
 from workflow_runtime_verification.tests.test import Test
 
