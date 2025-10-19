@@ -2,13 +2,14 @@ import inspect
 
 import numpy as np
 
+from workflow_runtime_verification.components.component import Component
 from workflow_runtime_verification.components.rt_monitor_example_app import (
     ex_adcVisual,
 )
 from workflow_runtime_verification.errors import NoValue, FunctionNotImplemented
 
 
-class adc:
+class adc(Component):
     def __init__(self):
         AcumCalib = 0
         Calib = 0

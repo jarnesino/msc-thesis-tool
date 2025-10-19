@@ -1,15 +1,15 @@
+from workflow_runtime_verification.components.component import Component
 from workflow_runtime_verification.errors import FunctionNotImplemented
 
 
-class SimpleDisplay:
+class SimpleDisplay(Component):
     def write(self, _data):
         pass
 
     def stop(self):
         pass
 
-    @staticmethod
-    def state():
+    def state(self):
         return {}
 
     def process_high_level_call(self, call_data):
