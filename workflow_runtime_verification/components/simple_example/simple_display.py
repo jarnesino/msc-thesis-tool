@@ -4,6 +4,9 @@ from workflow_runtime_verification.components.component import Component
 
 
 class SimpleDisplay(Component):
+    def __init__(self):
+        super().__init__()
+
     def write(self, data: np.uint16):
         pass
 

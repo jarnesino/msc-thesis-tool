@@ -104,6 +104,8 @@ class TextConfiguration:
 
 class display(Component):
     def __init__(self):
+        super().__init__()
+
         # TODO driver must have the base configuration of the display, such as the commands codes, etc.
         # in this prototype we assume the display configuration
         # set the default width and height of the display, note that some drivers can update the size with the

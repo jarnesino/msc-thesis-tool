@@ -9,6 +9,7 @@ from workflow_runtime_verification.errors import NoValue
 
 class adc(Component):
     def __init__(self):
+        super().__init__()
         self._adc_read = NoValue()
 
         # statistics variables

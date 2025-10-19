@@ -45,8 +45,8 @@ class Component:
                 value = exp_type(value)
                 new_args.append(value)
             except (TypeError, ValueError):
-                    print(
-                        f"Error: Can't convert the arg '{name}' al tipo {exp_type.__name__}"
-                    )
+                print(
+                    f"Error: Can't convert the arg '{name}' al tipo {exp_type.__name__}"
+                )
 
         return function(*new_args)
