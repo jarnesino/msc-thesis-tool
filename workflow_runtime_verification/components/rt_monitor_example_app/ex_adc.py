@@ -12,10 +12,8 @@ class adc(Component):
         super().__init__()
         self._adc_read = NoValue()
 
-        # statistics variables
         self.__total_values_read = 0
         self.__current_value = 0
-        # create the visualization features associated
         self.__visualADC = ex_adcVisual.adcVisual(parent=self, adc_component=self)
         self.__visualADC.Show()
 
