@@ -19,7 +19,6 @@ class Component:
         the first one is the class method name (e.g. lectura), then a lists of
         parameters for its call.
         """
-        # get information from string
         ls = call_data.split(",")
         function_name = ls[0]
 
@@ -27,9 +26,7 @@ class Component:
             raise FunctionNotImplemented(function_name)
 
         function = self.exported_functions()[function_name]
-        # get parameters
         args_str = ls[1:]
-        # call the function
         self.run_with_args(function, args_str)
         return True
 
