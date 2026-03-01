@@ -1,4 +1,4 @@
-# Runtime Verification for Real Time DAQs
+# Runtime Verification for SSPs
 
 
 ## Project Setup in Ubuntu
