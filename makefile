@@ -22,5 +22,5 @@ lint-without-correcting:
 test:
 	python -m unittest discover -s . -t .
 
-run-example-usage:
-	python -m usage.example1.usage
+run:
+	python main.py

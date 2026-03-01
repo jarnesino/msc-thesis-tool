@@ -56,10 +56,9 @@ Make sure to run it inside the Python environment, if you use one.
 
 ## Example usage
 
-1. Choose a valid or invalid report from the available ones in the `example_usage/` directory.
-2. Import it in the `usage.py` file, and pass it as an argument to the monitor's method.
-3. Execute `make run-example-usage`.
-4. The result of the verification will be printed in the console.
+1. Run the tool's interface with `make run` from the root of the project.
+2. Choose one set of example input files from the `example/` directory.
+3. Configure the logging as desired and start the verification.
 
 
 ## Simulator framework
